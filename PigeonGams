@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pigeon Runner</title>
+<style>
+body{background:#10172b;color:white;text-align:center;font-family:Arial}
+canvas{width:95%;max-width:500px;background:#8bdcff;border-radius:15px}
+button{padding:13px 24px;background:#60f5c0;border:0;border-radius:10px}
+</style>
+</head>
+<body>
+<h1>🐦 Pigeon Runner</h1>
+<canvas id="c" width="500" height="260"></canvas>
+<p>বাধা এড়াতে স্ক্রিনে ট্যাপ করো!</p>
+<button onclick="start()">Start Game</button>
+<p>Score: <span id="s">0</span></p>
+<a href="../index.html" style="color:#60f5c0">Home</a>
+<script>
+const c=document.querySelector("#c"),x=c.getContext("2d");
+let y,vy,obs,score,alive;
+function start(){y=180;vy=0;obs=[];score=0;alive=true;requestAnimationFrame(loop)}
+function jump(){if(alive&&y>=180)vy=-10}
+c.onclick=jump;
+function loop(){
+if(!alive)return;
+x.clearRect(0,0,500,260);
+x.fillStyle="#48a85b";x.fillRect(0,220,500,40);
+vy+=.45;y+=vy;if(y>180){y=180;vy=0}
+x.font="30px Arial";x.fillText("🐦",55,y+20);
+if(Math.random()<.025)obs.push({x:500,h:25+Math.random()*35});
+x.fillStyle="#e34b4b";
+obs.forEach(o=>{o.x-=4;x.fillRect(o.x,220-o.h,25,o.h);
+if(o.x<78&&o.x>40&&y+15>220-o.h)alive=false});
+obs=obs.filter(o=>o.x>-30);
+score++;document.querySelector("#s").textContent=score;
+if(alive)requestAnimationFrame(loop);
+else{x.fillStyle="#111";x.font="25px Arial";x.fillText("GAME OVER",175,100)}
+}
+x.fillStyle="#123";x.font="20px Arial";x.fillText("Press Start",190,120);
+</script>
+</body>
+</html>
