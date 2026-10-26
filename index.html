@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090d18">
+<meta name="description" content="Pigeon Games — Discover browser games, mobile games and game downloads.">
+<title>Pigeon Games Pro | Play & Discover</title>
+<style>
+:root{
+  --bg:#090d18;--panel:#11182a;--card:#151e32;
+  --text:#f5f7ff;--muted:#a4afc8;--line:#29344c;
+  --accent:#61f5c2;--purple:#9b83ff;
+}
+body.light{
+  --bg:#f4f6fb;--panel:#fff;--card:#fff;
+  --text:#172037;--muted:#66718a;--line:#dce2ef;
+  --accent:#087f62;--purple:#7050d8;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:system-ui,-apple-system,Arial,sans-serif;
+ transition:background .2s,color .2s
+}
+button,input{font:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer}
+.wrap{width:min(1100px,100% - 30px);margin:auto}
+header{
+ position:sticky;top:0;z-index:5;background:var(--panel);
+ border-bottom:1px solid var(--line)
+}
+.nav{
+ min-height:68px;display:flex;align-items:center;
+ justify-content:space-between;gap:12px
+}
+.brand{font-size:22px;font-weight:900;letter-spacing:-1px}
+.brand b{color:var(--accent)}
+.brand small{display:block;font-size:10px;letter-spacing:2px;color:var(--muted)}
+.actions{display:flex;align-items:center;gap:8px}
+.iconbtn,.menu{
+ background:var(--card);border:1px solid var(--line);
+ color:var(--text);border-radius:11px;padding:10px
+}
+.hero{
+ margin:25px 0;padding:clamp(23px,5vw,52px);
+ border:1px solid #554c96;border-radius:25px;overflow:hidden;
+ background:radial-gradient(ellipse at 85% 15%,#5142a5 0,transparent 38%),
+ linear-gradient(120deg,#132f43,#19142e 70%,#302053);
+ position:relative
+}
+.eyebrow{color:#80f8d1;font-size:12px;font-weight:800;letter-spacing:2px}
+.hero h1{font-size:clamp(32px,7vw,57px);line-height:1.08;
+ margin:14px 0;max-width:650px;letter-spacing:-1.5px}
+.hero h1 span{color:#75f4ce}
+.hero p{color:#c4cce1;line-height:1.8;max-width:520px;font-size:14px}
+.primary,.secondary{
+ display:inline-flex;justify-content:center;align-items:center;
+ border:0;border-radius:11px;padding:12px 17px;font-weight:800
+}
+.primary{background:var(--accent);color:#08251d}
+.secondary{background:#ffffff15;color:white;border:1px solid #ffffff35}
+.hero-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.stats{display:flex;flex-wrap:wrap;gap:24px;margin-top:28px}
+.stat strong{font-size:20px;display:block;color:#fff}
+.stat span{font-size:11px;color:#b6c3db}
+.searchbox{
+ display:flex;align-items:center;gap:9px;padding:6px 8px 6px 14px;
+ background:var(--panel);border:1px solid var(--line);border-radius:14px
+}
+.searchbox input{min-width:0;flex:1;background:transparent;
+ border:0;outline:0;color:var(--text);padding:9px 0}
+.searchbox input::placeholder{color:var(--muted)}
+.searchbox button{background:var(--accent);border:0;border-radius:9px;
+ padding:10px 13px;font-weight:800}
+.toolbar{display:grid;grid-template-columns:1fr;gap:13px;margin:24px 0}
+.sectionhead{display:flex;align-items:center;justify-content:space-between;
+ gap:10px;margin:29px 0 15px}
+.sectionhead h2{font-size:20px;margin:0}
+.muted{font-size:12px;color:var(--muted)}
+.filters{display:flex;gap:8px;overflow:auto;padding:3px 0 9px}
+.chip{white-space:nowrap;border:1px solid var(--line);
+ border-radius:30px;background:var(--panel);color:var(--muted);
+ padding:9px 14px;font-size:12px;font-weight:700}
+.chip.active{background:var(--accent);color:#08251d;border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.game{min-width:0;background:var(--card);border:1px solid var(--line);
+ border-radius:17px;overflow:hidden;transition:transform .2s,border .2s}
+.game:hover{transform:translateY(-4px);border-color:var(--purple)}
+.cover{height:115px;display:grid;place-items:center;position:relative;
+ background:linear-gradient(135deg,var(--c1,#264e73),var(--c2,#6441a0))}
+.cover .emoji{font-size:49px;filter:drop-shadow(0 8px 10px #0004)}
+.pill{position:absolute;top:9px;left:9px;background:#07101dbd;
+ color:#fff;border-radius:7px;padding:5px 8px;font-size:10px}
+.gamebody{padding:12px}
+.game h3{font-size:15px;margin:0 0 6px;overflow-wrap:anywhere}
+.game p{font-size:12px;color:var(--muted);line-height:1.6;
+ min-height:38px;margin:7px 0}
+.meta{display:flex;align-items:center;justify-content:space-between;
+ gap:5px;font-size:10px;color:var(--muted)}
+.play{display:block;text-align:center;margin-top:12px;padding:10px;
+ border-radius:10px;background:var(--accent);color:#08251d;
+ font-size:12px;font-weight:900}
+.play:hover{filter:brightness(1.08)}
+.empty{display:none;text-align:center;padding:35px 10px;color:var(--muted)}
+.notice{margin:30px 0;padding:18px;border:1px solid var(--line);
+ border-radius:15px;background:var(--panel);font-size:13px;
+ line-height:1.8;color:var(--muted)}
+.notice strong{color:var(--text)}
+footer{border-top:1px solid var(--line);margin-top:35px;padding:27px 0 90px}
+.footrow{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+footer p{color:var(--muted);font-size:12px;line-height:1.8}
+footer a{color:var(--accent)}
+.bottomnav{display:none}
+@media(min-width:600px){
+ .toolbar{grid-template-columns:1fr auto;align-items:center}
+ .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .cover{height:150px}
+}
+@media(min-width:850px){
+ .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .hero{margin-top:30px}
+}
+@media(max-width:420px){
+ .wrap{width:calc(100% - 22px)}
+ .grid{gap:9px}
+ .gamebody{padding:10px}
+ .game h3{font-size:13px}
+ .game p{font-size:11px}
+ .cover{height:100px}
+ .cover .emoji{font-size:40px}
+ .nav{min-height:61px}
+ .brand{font-size:19px}
+}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap nav">
+  <a class="brand" href="#" aria-label="Pigeon Games Home">
+   🐦 Pigeon<b>Games</b>
+   <small>PLAY • DISCOVER • ENJOY</small>
+  </a>
+  <div class="actions">
+   <a class="iconbtn" href="#games" aria-label="Games">🎮</a>
+   <button class="iconbtn" id="theme" aria-label="Change theme">☀️</button>
+  </div>
+ </div>
+</header>
+
+<main class="wrap">
+ <section class="hero">
+  <div class="eyebrow">YOUR NEXT ADVENTURE STARTS HERE</div>
+  <h1>Discover your next <span>favorite game.</span></h1>
+  <p>Explore exciting games, find new adventures and enjoy your gaming journey with Pigeon Games.</p>
+  <div class="hero-buttons">
+   <a class="primary" href="#games">Explore Games ↗</a>
+   <a class="secondary" href="#about">About Us</a>
+  </div>
+  <div class="stats">
+   <div class="stat"><strong id="total">8</strong><span>GAME LISTINGS</span></div>
+   <div class="stat"><strong>FREE</strong><span>TO EXPLORE</span></div>
+   <div class="stat"><strong>24/7</strong><span>ONLINE WEBSITE</span></div>
+  </div>
+ </section>
+
+ <div class="toolbar">
+  <div class="searchbox">
+   <span>⌕</span>
+   <input id="search" type="search" placeholder="Search games..." aria-label="Search games">
+   <button id="clear" type="button">Clear</button>
+  </div>
+  <span class="muted">Find a game you love</span>
+ </div>
+
+ <div class="sectionhead" id="games">
+  <h2>🔥 Explore Games</h2>
+  <span class="muted" id="count">8 games</span>
+ </div>
+ <div class="filters" id="filters">
+  <button class="chip active" data-cat="All">All Games</button>
+  <button class="chip" data-cat="Action">Action</button>
+  <button class="chip" data-cat="Racing">Racing</button>
+  <button class="chip" data-cat="Adventure">Adventure</button>
+  <button class="chip" data-cat="Puzzle">Puzzle</button>
+  <button class="chip" data-cat="Sports">Sports</button>
+ </div>
+
+ <div class="grid" id="grid">
+  <article class="game" data-name="pigeon runner" data-cat="Adventure">
+   <div class="cover" style="--c1:#145e63;--c2:#203c75"><span class="pill">FEATURED</span><span class="emoji">🐦</span></div>
+   <div class="gamebody"><h3>Pigeon Runner</h3><div class="meta"><span>Adventure</span><span>★ New</span></div><p>A sample game listing. Add your real game here.</p><a class="play" href="games/pigeon-runner.html">▶ Play Game</a></div>
+  </article>
+  <article class="game" data-name="bike racing" data-cat="Racing">
+   <div class="cover" style="--c1:#80351e;--c2:#ca7a26"><span class="emoji">🏍️</span></div>
+   <div class="gamebody"><h3>Bike Racing</h3><div class="meta"><span>Racing</span><span>Mobile</span></div><p>A sample listing for a bike racing game.</p><a class="play" href="games/bike-racing.html">▶ Play Game</a></div>
+  </article>
+  <article class="game" data-name="space adventure" data-cat="Action">
+   <div class="cover" style="--c1:#29266b;--c2:#863f8f"><span class="emoji">🚀</span></div>
+   <div class="gamebody"><h3>Space Adventure</h3><div class="meta"><span>Action</span><span>Arcade</span></div><p>A sample space adventure listing.</p><a class="play" href="games/space-adventure.html">▶ Play Game</a></div>
+  </article>
+  <article class="game" data-name="puzzle master" data-cat="Puzzle">
+   <div class="cover" style="--c1:#17604e;--c2:#6b8b40"><span class="emoji">🧩</span></div>
+   <div class="gamebody"><h3>Puzzle Master</h3><div class="meta"><span>Puzzle</span><span>Brain</span></div><p>A sample puzzle game listing.</p><a class="play" href="games/puzzle-master.html">▶ Play Game</a></div>
+  </article>
+  <article class="game" data-name="football challenge" data-cat="Sports">
+   <div class="cover" style="--c1:#14562f;--c2:#378a61"><span class="emoji">⚽</span></div>
+   <div class="gamebody"><h3>Football Challenge</h3><div class="meta"><span>Sports</span><span>Fun</span></div><p>A sample sports game listing.</p><a class="play" href="games/football.html">▶ Play Game</a></div>
+  </article>
+  <article class="game" data-name="action hero" data-cat="Action">
+   <div class="cover" style="--c1:#7b233f;--c2:#4a245d"><span class="emoji">⚔️</span></div>
+   <div class="gamebody"><h3>Action Hero</h3><div class="meta"><span>Action</span><span>Arcade</span></div><p>A sample action game listing.</p><a class="play" href="games/action-hero.html">▶ Play Game</a></div>
+  </article>
+  <article class="game" data-name="speed racer" data-cat="Racing">
+   <div class="cover" style="--c1:#244a81;--c2:#247e96"><span class="emoji">🏎️</span></div>
+   <div class="gamebody"><h3>Speed Racer</h3><div class="meta"><span>Racing</span><span>Fast</span></div><p>A sample car racing listing.</p><a class="play" href="games/speed-racer.html">▶ Play Game</a></div>
+  </article>
+  <article class="game" data-name="island quest" data-cat="Adventure">
+   <div class="cover" style="--c1:#167d80;--c2:#356044"><span class="emoji">🏝️</span></div>
+   <div class="gamebody"><h3>Island Quest</h3><div class="meta"><span>Adventure</span><span>Explore</span></div><p>A sample island adventure listing.</p><a class="play" href="games/island-quest.html">▶ Play Game</a></div>
+  </article>
+ </div>
+
+ <div class="empty" id="empty">😕 No games found. Try another search.</div>
+
+ <section class="notice" id="about">
+  <strong>About Pigeon Games</strong><br>
+  Pigeon Games is a game discovery website. Game cards are sample listings until you add your own working games or authorized download links. Only download files from trusted sources.
+ </section>
+</main>
+
+<footer>
+ <div class="wrap footrow">
+  <div><div class="brand">🐦 Pigeon<b>Games</b></div><p>Discover more. Play more.</p></div>
+  <div><strong>Quick Links</strong><p><a href="#games">Games</a><br><a href="#about">About Us</a><br><a href="mailto:your-email@example.com">Contact Us</a></p></div>
+ </div>
+ <div class="wrap muted">© <span id="year"></span> Pigeon Games. All rights reserved.</div>
+</footer>
+
+<script>
+const cards=[...document.querySelectorAll(".game")];
+const search=document.getElementById("search");
+const count=document.getElementById("count");
+const empty=document.getElementById("empty");
+let category="All";
+
+function render(){
+ const q=search.value.toLowerCase().trim();
+ let shown=0;
+ cards.forEach(card=>{
+  const matchName=card.dataset.name.includes(q);
+  const matchCat=category==="All"||card.dataset.cat===category;
+  const visible=matchName&&matchCat;
+  card.style.display=visible?"":"none";
+  if(visible)shown++;
+ });
+ count.textContent=shown+" game"+(shown===1?"":"s");
+ empty.style.display=shown?"none":"block";
+ document.getElementById("total").textContent=cards.length;
+}
+search.addEventListener("input",render);
+document.getElementById("clear").addEventListener("click",()=>{
+ search.value="";
+ category="All";
+ document.querySelectorAll(".chip").forEach(b=>b.classList.toggle("active",b.dataset.cat==="All"));
+ render();
+ search.focus();
+});
+document.getElementById("filters").addEventListener("click",e=>{
+ const btn=e.target.closest(".chip");
+ if(!btn)return;
+ category=btn.dataset.cat;
+ document.querySelectorAll(".chip").forEach(b=>b.classList.toggle("active",b===btn));
+ render();
+});
+document.getElementById("theme").addEventListener("click",()=>{
+ document.body.classList.toggle("light");
+ document.getElementById("theme").textContent=
+ document.body.classList.contains("light")?"🌙":"☀️";
+});
+document.getElementById("year").textContent=new Date().getFullYear();
+render();
+</script>
+</body>
+</html>
